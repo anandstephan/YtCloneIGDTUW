@@ -17,7 +17,7 @@ const App = () => {
           part: "snippet",
           maxResults: 5,
           key: "AIzaSyDnlZ8qX5rUgMd-eWPYUh6tmmh4eHVExVM",
-          q: "babitaji",
+          q: "reactnative",
         },
       });
       console.log("===>", response.data);
