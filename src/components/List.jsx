@@ -1,11 +1,10 @@
 import ListItem from "./ListItem";
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const List = () => {
+const List = (props) => {
   return (
     <>
-      {arr.map((item, idx) => (
-        <ListItem />
+      {props.list.map((item, idx) => (
+        <ListItem myItem={item} />
       ))}
     </>
   );

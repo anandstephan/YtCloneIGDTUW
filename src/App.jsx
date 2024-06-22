@@ -4,43 +4,27 @@ import SearchInput from "./components/SearchInput";
 import Main from "./components/Main";
 import List from "./components/List";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import youtube from "./api/youtube";
 const App = () => {
+  const [videos, setVideos] = useState([]);
+  const [mainVideo, setMainVideo] = useState(null);
+
   useEffect(() => {
-    // axios
-    //   .get("https://jsonplaceholder.typicode.com/todos/1")
-    //   .then((data) => console.log("==>", data.data));
-
-    // fetch("https://jsonplaceholder.typicode.com/todos/1")
-    //   .then((res) => res.json())
-    //   .then((data) => console.log("===>", data));
-
-    async function callAfter2Sec() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve("Akansha");
-        }, 2000);
+    async function getData() {
+      const response = await youtube.get("search", {
+        params: {
+          part: "snippet",
+          maxResults: 5,
+          key: "AIzaSyDnlZ8qX5rUgMd-eWPYUh6tmmh4eHVExVM",
+          q: "babitaji",
+        },
       });
+      console.log("===>", response.data);
+      setVideos(response.data.items);
+      setMainVideo(response.data.items[0]);
     }
-
-    // callAfter2Sec().then((res) => console.log("--->", res));
-
-    async function calling() {
-      const res = await callAfter2Sec();
-      console.log("==>", res);
-    }
-
-    console.log("Shreeya");
-    calling();
-    console.log("Nabila");
-    // showHeader()
-    // addToCart().then((res) => {
-    //   goToPay();
-    // })
-    // .then(res => {
-    //   DeliverMsg()
-    // })
-    // showFooter()
+    getData();
   }, []);
 
   return (
@@ -48,10 +32,10 @@ const App = () => {
       <SearchInput />
       <Row>
         <Col sm={8}>
-          <Main />
+          <Main video={mainVideo} />
         </Col>
         <Col sm={4}>
-          <List />
+          <List list={videos} />
         </Col>
       </Row>
     </Container>
