@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { InputGroup, Form, Button } from "react-bootstrap";
 import youtube from "../api/youtube";
 
-const SearchInput = () => {
-  const [searchTerm, setSearchTerm] = useState("bollywood");
+const SearchInput = ({ onSearch }) => {
+  // console.log("Value of props", props);
+  const [searchTerm, setSearchTerm] = useState("srk songs");
   const [submitOrNot, setSubmitOrNot] = useState(false);
 
   const submitHandler = () => {
-    setSubmitOrNot(!submitOrNot);
+    // console.log("searchItem", searchTerm);
+    onSearch(searchTerm);
+    // setSubmitOrNot(!submitOrNot);
   };
 
   return (

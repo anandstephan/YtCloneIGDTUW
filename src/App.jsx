@@ -9,27 +9,27 @@ import youtube from "./api/youtube";
 const App = () => {
   const [videos, setVideos] = useState([]);
   const [mainVideo, setMainVideo] = useState(null);
-
+  async function getData(searchItem) {
+    // console.log("==>", searchItem);
+    const response = await youtube.get("search", {
+      params: {
+        part: "snippet",
+        maxResults: 5,
+        key: "AIzaSyDnlZ8qX5rUgMd-eWPYUh6tmmh4eHVExVM",
+        q: searchItem,
+      },
+    });
+    console.log("===>", response.data);
+    setVideos(response.data.items);
+    setMainVideo(response.data.items[1]);
+  }
   useEffect(() => {
-    async function getData() {
-      const response = await youtube.get("search", {
-        params: {
-          part: "snippet",
-          maxResults: 5,
-          key: "AIzaSyDnlZ8qX5rUgMd-eWPYUh6tmmh4eHVExVM",
-          q: "reactnative",
-        },
-      });
-      console.log("===>", response.data);
-      setVideos(response.data.items);
-      setMainVideo(response.data.items[0]);
-    }
-    getData();
+    // getData("srk songs");
   }, []);
 
   return (
     <Container>
-      <SearchInput />
+      <SearchInput onSearch={getData} />
       <Row>
         <Col sm={8}>
           <Main video={mainVideo} />
